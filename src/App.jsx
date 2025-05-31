@@ -7,7 +7,7 @@ import Home from "./page/homePage/home";
 import Dashboard from "./page/dashboard/dashboard";
 import ProtectedRoute from "./components/protectedRoute";
 import Detail from "./page/dashboard/[id]/detail";
-import Layout from "./page/dashboard/layout";
+import Layout from "./page/homePage/layout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SearchProvider } from "./searchContext/SearchContext";
 
@@ -16,8 +16,11 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Front />} />
-          <Route
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+          </Route>
+          <Route path="/login" element={<Front />} />
+          {/* <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
@@ -29,7 +32,7 @@ function App() {
           >
             <Route index element={<Dashboard />} />
             <Route path=":id" element={<Detail />} />
-          </Route>
+          </Route> */}
         </Routes>
       </BrowserRouter>
     </>

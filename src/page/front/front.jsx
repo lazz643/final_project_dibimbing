@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Login from "../../components/login";
 import Regis from "../../components/regis";
+import { useLocation } from "react-router-dom";
 
 function Front() {
   const [menu, setMenu] = useState("login");
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.from === "regis") {
+      setMenu("regis");
+    } else {
+      setMenu("login");
+    }
+  }, [location.state]);
 
   const toggleMenu = () => {
     setMenu((prev) => (prev === "login" ? "regis" : "login"));
