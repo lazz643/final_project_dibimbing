@@ -16,16 +16,16 @@ function Login() {
     };
 
     try {
-      const response = await axios.post("https://reqres.in/api/login", payload, {
+      const response = await axios.post("https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/login", payload, {
         headers: {
-          "x-api-key": "reqres-free-v1",
+          apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
         },
       });
       setSuccess("Login success");
       localStorage.setItem("token", response.data.token);
 
       setTimeout(() => {
-        navigate("/dashboard");
+        navigate("/");
       }, 2000);
     } catch (err) {
       console.log(err.response);

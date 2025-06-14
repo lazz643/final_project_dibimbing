@@ -5,7 +5,7 @@ function Headers() {
   const navigate = useNavigate();
   return (
     <>
-      <div className="w-full h-[52px] bg-white flex justify-between items-center px-96">
+      <div className="w-full h-[52px] bg-white flex justify-between items-center px-96 sticky top-0 z-10">
         <div>logo</div>
         <ul className="flex gap-8">
           <li>

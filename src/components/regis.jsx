@@ -14,9 +14,9 @@ function Regis({ menu }) {
     };
 
     try {
-      const response = await axios.post("https://reqres.in/api/register", payload, {
+      const response = await axios.post("https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/login/api/v1/register", payload, {
         headers: {
-          "x-api-key": "reqres-free-v1",
+          apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
         },
       });
       console.log(response);
