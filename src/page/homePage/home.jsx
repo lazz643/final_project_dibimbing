@@ -4,10 +4,12 @@ import { AiOutlineStar, AiFillStar, AiOutlineClockCircle } from "react-icons/ai"
 import { IoLocationOutline } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
 import ScrollableSection from "../../components/ScrollableSection";
+import { useNavigate } from "react-router-dom";
 import Banner from "../../components/banner";
 import axios from "axios";
 
 function Home() {
+  const navigator = useNavigate();
   const token = localStorage.getItem("token");
   const [banner, setBanner] = useState([]);
   const [category, setCategory] = useState([]);
@@ -67,7 +69,7 @@ function Home() {
       </div>
       <div className="p-2 grow flex items-center gap-3 justify-between">
         <p className="text-[14px]">Explore Category</p>
-        <button onClick={""} className="border-2 border-[#28cdba] rounded-full text-[#28cdba] text-[8px]">
+        <button onClick={() => navigator(`/category/${cat.id}`)} className="border-2 border-[#28cdba] rounded-full text-[#28cdba] text-[8px]">
           <MdChevronRight size={12} />
         </button>
       </div>
@@ -75,7 +77,7 @@ function Home() {
   );
 
   const renderActivityItem = (act, index) => (
-    <div key={index} className="flex flex-col h-70 w-60 rounded-2xl bg-white flex-shrink-0 overflow-hidden shadow-md transition-all hover:-translate-y-1 hover:shadow-lg">
+    <div key={index} onClick={() => navigator(`/activity/${act.id}`)} className="flex flex-col h-70 w-60 rounded-2xl bg-white flex-shrink-0 overflow-hidden shadow-md transition-all hover:-translate-y-1 hover:shadow-lg">
       <div className="h-22 w-full relative">
         <img src={act.imageUrls} alt={act.title} className="w-full h-full object-cover" />
         <div className="absolute top-0 left-0 w-full h-full flex flex-col bg-gradient-to-t from-black/60 via-black/30 to-transparent">
@@ -113,7 +115,7 @@ function Home() {
 
   const renderPromoItem = (promo, index) => (
     <div key={index} className="flex flex-col w-44 h-64 rounded-2xl bg-white flex-shrink-0 overflow-hidden shadow-md transition-all hover:-translate-y-1 hover:shadow-lg">
-      <div className="h-40 w-full relative">
+      <div className="h-30 w-full relative">
         <img src={promo.imageUrl} alt="promo" className="w-full h-full object-cover" />
         <div className="absolute top-0 left-0 w-full h-full flex flex-col bg-gradient-to-t from-black/60 via-black/30 to-transparent">
           <div className="flex-1 flex items-end p-2 text-white">
@@ -136,7 +138,7 @@ function Home() {
             <p className="text-[12px] text-gray-500">Expires in 10 days</p>
           </div>
 
-          <button onClick={""} className="border-2 border-[#28cdba] rounded-full text-[#28cdba] text-[8px]">
+          <button onClick={() => navigator(`/promo/${promo.id}`)} className="border-2 border-[#28cdba] rounded-full text-[#28cdba] text-[8px]">
             <MdChevronRight size={12} />
           </button>
         </div>
@@ -200,13 +202,13 @@ function Home() {
       <Banner banner={banner} />
 
       {/* overview categories */}
-      <ScrollableSection title="Explore Categories" description="From tropical escapes to thrilling adventures — start exploring now." data={category} renderItem={renderCategoryItem} bgColor="bg-[#eafffd]" />
+      <ScrollableSection title="Explore Categories" description="From tropical escapes to thrilling adventures — start exploring now." data={category} renderItem={renderCategoryItem} navigation="/category" bgColor="bg-[#eafffd]" />
 
       {/* overview activities */}
-      <ScrollableSection title="Popular Activities" description="Start your journey with top-rated activities around the world." data={activity} renderItem={renderActivityItem} bgColor="bg-white" />
+      <ScrollableSection title="Popular Activities" description="Start your journey with top-rated activities around the world." data={activity} renderItem={renderActivityItem} navigation="/activity" bgColor="bg-white" />
 
       {/* overview promo */}
-      <ScrollableSection title="Special Promos" description="Exclusive deals and discounts for your next adventure." data={promo} renderItem={renderPromoItem} bgColor="bg-[#f5f5f5]" />
+      <ScrollableSection title="Special Promos" description="Exclusive deals and discounts for your next adventure." data={promo} renderItem={renderPromoItem} navigation="/promo" bgColor="bg-[#f5f5f5]" />
     </>
   );
 }

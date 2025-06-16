@@ -6,19 +6,19 @@ function Headers() {
   return (
     <>
       <div className="w-full h-[52px] bg-white flex justify-between items-center px-96 sticky top-0 z-10">
-        <div>logo</div>
+        <div>TravelJoy</div>
         <ul className="flex gap-8">
           <li>
-            <button>Home</button>
+            <button onClick={() => navigate("/")}>Home</button>
           </li>
           <li>
-            <button>Banner</button>
+            <button onClick={() => navigate("/category")}>Category</button>
           </li>
           <li>
-            <button>Activities</button>
+            <button onClick={() => navigate("/activity")}>Activities</button>
           </li>
           <li>
-            <button>Promo</button>
+            <button onClick={() => navigate("/promo")}>Promo</button>
           </li>
         </ul>
         <div className="flex gap-1.5">

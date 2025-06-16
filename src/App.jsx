@@ -7,6 +7,12 @@ import Home from "./page/homePage/home";
 import Dashboard from "./page/dashboard/dashboard";
 import ProtectedRoute from "./components/protectedRoute";
 import Detail from "./page/dashboard/[id]/detail";
+import CategoryPage from "./page/categoryPage/categoryPage";
+import ActivityPage from "./page/activityPage/activityPage";
+import ActivityDetail from "./page/activityPage/[id]";
+import PromoDetail from "./page/promoPage/[id]";
+import CategoryDetail from "./page/categoryPage/[id]";
+import PromoPage from "./page/promoPage/promoPage";
 import Layout from "./page/homePage/layout";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SearchProvider } from "./searchContext/SearchContext";
@@ -18,6 +24,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="/activity" element={<ActivityPage />} />
+            <Route path="/activity/:id" element={<ActivityDetail />} />
+            <Route path="/category" element={<CategoryPage />} />
+            <Route path="/category/:id" element={<CategoryDetail />} />
+            <Route path="/promo" element={<PromoPage />} />
+            <Route path="/promo/:id" element={<PromoDetail />} />
           </Route>
           <Route path="/login" element={<Front />} />
           {/* <Route

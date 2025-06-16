@@ -1,8 +1,10 @@
 import { useRef } from "react";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
-function ScrollableSection({ title, description, data, renderItem, bgColor = "bg-white" }) {
+function ScrollableSection({ title, description, data, renderItem, bgColor = "bg-white", navigation }) {
   const scrollContainerRef = useRef(null);
+  const navigate = useNavigate();
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
@@ -35,7 +37,9 @@ function ScrollableSection({ title, description, data, renderItem, bgColor = "bg
               <MdChevronRight size={18} />
             </button>
           </div>
-          <button className="border-none rounded-lg bg-[#28cdba] text-[10px] text-white px-3">View All</button>
+          <button onClick={() => navigate(navigation)} className="border-none rounded-lg bg-[#28cdba] text-[10px] text-white px-3">
+            View All
+          </button>
         </div>
       </div>
     </div>
