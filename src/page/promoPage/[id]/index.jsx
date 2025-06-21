@@ -94,8 +94,11 @@ function PromoDetail() {
 
   if (loading) {
     return (
-      <div className="px-96 py-10 min-h-screen bg-[#f5f5f5] flex justify-center items-center">
-        <p>Loading promo details...</p>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#28cdba] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading promo details...</p>
+        </div>
       </div>
     );
   }

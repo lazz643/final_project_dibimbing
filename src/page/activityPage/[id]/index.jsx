@@ -13,6 +13,9 @@ function ActivityDetail() {
   const [relatedActivities, setRelatedActivities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [review, setReview] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [guestCount, setGuestCount] = useState(1);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [reviews, setReviews] = useState([
     {
       id: 1,
@@ -97,6 +100,58 @@ function ActivityDetail() {
     setReview("");
   };
 
+  const handleAddToCart = async () => {
+    if (!selectedDate) {
+      alert("Please select a date");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please login first");
+      navigate("/front");
+      return;
+    }
+
+    try {
+      setIsAddingToCart(true);
+      const response = await axios.post(
+        "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/add-cart",
+        {
+          activityId: id,
+          quantity: guestCount,
+        },
+        {
+          headers: {
+            apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.status === "OK") {
+        alert("Activity added to cart successfully!");
+
+        // Trigger custom event to update cart counter in header
+        const updateCartEvent = new CustomEvent("cartUpdated");
+        window.dispatchEvent(updateCartEvent);
+
+        navigate("/cart");
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      if (error.response?.status === 401) {
+        alert("Please login again");
+        localStorage.removeItem("token");
+        navigate("/front");
+      } else {
+        alert("Failed to add to cart. Please try again.");
+      }
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
+
   const renderRelatedActivityCard = (act) => (
     <div key={act.id} className="flex flex-col w-full rounded-2xl bg-white overflow-hidden shadow-md transition-all hover:-translate-y-1 hover:shadow-lg">
       <div className="h-40 w-full relative">
@@ -144,8 +199,11 @@ function ActivityDetail() {
 
   if (loading) {
     return (
-      <div className="px-96 py-10 min-h-screen bg-[#f5f5f5] flex justify-center items-center">
-        <p>Loading activity details...</p>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#28cdba] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading activity details...</p>
+        </div>
       </div>
     );
   }
@@ -297,7 +355,14 @@ function ActivityDetail() {
                 Select Date
               </label>
               <div className="relative">
-                <input type="date" id="event-date" className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#28cdba] focus:border-transparent" min={new Date().toISOString().split("T")[0]} />
+                <input
+                  type="date"
+                  id="event-date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#28cdba] focus:border-transparent"
+                  min={new Date().toISOString().split("T")[0]}
+                />
               </div>
             </div>
 
@@ -310,8 +375,7 @@ function ActivityDetail() {
                 <button
                   className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
                   onClick={() => {
-                    const input = document.getElementById("guest-count");
-                    if (input.value > 1) input.value = Number(input.value) - 1;
+                    if (guestCount > 1) setGuestCount(guestCount - 1);
                   }}
                 >
                   -
@@ -319,16 +383,16 @@ function ActivityDetail() {
                 <input
                   type="number"
                   id="guest-count"
+                  value={guestCount}
+                  onChange={(e) => setGuestCount(Number(e.target.value))}
                   className="w-full mx-2 text-center border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-[#28cdba] focus:border-transparent"
                   min="1"
                   max="10"
-                  defaultValue="1"
                 />
                 <button
                   className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
                   onClick={() => {
-                    const input = document.getElementById("guest-count");
-                    if (input.value < 10) input.value = Number(input.value) + 1;
+                    if (guestCount < 10) setGuestCount(guestCount + 1);
                   }}
                 >
                   +
@@ -349,9 +413,13 @@ function ActivityDetail() {
             </div>
 
             {/* Book Now Button */}
-            <button className="w-full bg-[#28cdba] text-white py-3 rounded-lg font-medium hover:bg-[#20a89a] transition-colors flex items-center justify-center gap-2">
+            <button
+              onClick={handleAddToCart}
+              disabled={isAddingToCart}
+              className="w-full bg-[#28cdba] text-white py-3 rounded-lg font-medium hover:bg-[#20a89a] transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <FaShoppingCart size={16} />
-              Book Now
+              {isAddingToCart ? "Adding to Cart..." : "Add to Cart"}
             </button>
           </div>
         </div>

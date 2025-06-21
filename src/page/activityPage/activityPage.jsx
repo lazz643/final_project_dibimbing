@@ -80,7 +80,7 @@ function ActivityPage() {
 
         <div className="flex items-end justify-between mt-1 grow">
           <div className="flex flex-col">
-            {act.price_discount && <span className="text-xs text-gray-400 line-through">Rp {act.price}</span>}
+            {act.price_discount > 0 && <span className="text-xs text-gray-400 line-through">Rp {act.price}</span>}
             <span className="text-sm font-semibold text-[#28cdba]">Rp {act.price_discount || act.price}</span>
           </div>
           <button className="bg-[#28cdba] text-white p-2 rounded-full hover:bg-[#20a89a] transition-colors">
@@ -99,8 +99,11 @@ function ActivityPage() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <p>Loading activities...</p>
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#28cdba] mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading activities...</p>
+          </div>
         </div>
       ) : (
         <>

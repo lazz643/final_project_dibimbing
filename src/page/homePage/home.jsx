@@ -15,10 +15,12 @@ function Home() {
   const [category, setCategory] = useState([]);
   const [activity, setActivity] = useState([]);
   const [promo, setpromo] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
       try {
+        setLoading(true);
         const responseBanner = await axios.get(" https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/banners", {
           headers: {
             apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
@@ -44,8 +46,10 @@ function Home() {
         setCategory(responseCat.data.data);
         setActivity(responseAct.data.data);
         setpromo(responsePromo.data.data);
+        setLoading(false);
       } catch (err) {
         console.log(err.response);
+        setLoading(false);
       }
     };
 
@@ -145,6 +149,17 @@ function Home() {
       </div>
     </div>
   );
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#28cdba] mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading home page...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
