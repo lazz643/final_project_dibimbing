@@ -28,7 +28,13 @@ function Transaction() {
           Authorization: `Bearer ${token}`,
         },
       });
-      setTransactions(response.data.data || []);
+
+      // Sort transactions by orderDate (newest first)
+      const sortedTransactions = (response.data.data || []).sort((a, b) => {
+        return new Date(b.orderDate) - new Date(a.orderDate);
+      });
+
+      setTransactions(sortedTransactions);
     } catch (error) {
       console.error("Error fetching transactions:", error);
       if (error.response?.status === 401) {

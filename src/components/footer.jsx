@@ -14,7 +14,7 @@ function Footer() {
       </div>
 
       {/* Konten footer*/}
-      <div className="container mx-auto px-96 relative z-10 text-white">
+      <div className="container mx-auto px-4 sm:px-8 md:px-16 lg:px-32 xl:px-96 relative z-10 text-white">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo dan Deskripsi */}
           <div className="col-span-1">

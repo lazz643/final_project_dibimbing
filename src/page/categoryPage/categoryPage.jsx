@@ -48,23 +48,23 @@ function CategoryPage() {
 
   // Render category card
   const renderCategoryCard = (cat, index) => (
-    <div key={index} className="flex flex-col w-full md:w-[calc(50%-16px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-16px)] h-54 rounded-2xl bg-white overflow-hidden shadow-md transition-all hover:-translate-y-1 hover:shadow-lg mb-6">
-      <div className="h-40 w-full relative">
+    <div key={index} className="flex flex-col w-full h-48 sm:h-52 md:h-54 rounded-xl md:rounded-2xl bg-white overflow-hidden shadow-md transition-all hover:-translate-y-1 hover:shadow-lg">
+      <div className="h-32 sm:h-36 md:h-40 w-full relative">
         <img src={cat.imageUrl} alt={cat.name} className="w-full h-full object-cover" />
         <div className="absolute top-0 left-0 w-full h-full flex flex-col bg-gradient-to-t from-black/60 via-black/30 to-transparent">
-          <div className="flex-1 flex justify-end items-start p-2">
+          <div className="flex-1 flex justify-end items-start p-1.5 md:p-2">
             <button className="border-none rounded-full bg-[rgba(255,255,255,0.8)] backdrop-blur-lg p-1 text-[#28cdba]">
-              <AiOutlineStar />
+              <AiOutlineStar size={14} />
             </button>
           </div>
-          <div className="flex-1 flex items-end p-2 text-white">
-            <p>{cat.name}</p>
+          <div className="flex-1 flex items-end p-1.5 md:p-2 text-white">
+            <p className="text-sm md:text-base font-medium">{cat.name}</p>
           </div>
         </div>
       </div>
-      <div className="p-2 grow flex items-center gap-3 justify-between">
-        <p className="text-[14px]">Explore Category</p>
-        <button onClick={() => navigator(`/category/${cat.id}`)} className="border-2 border-[#28cdba] rounded-full text-[#28cdba] text-[8px]">
+      <div className="p-2 grow flex items-center gap-2 md:gap-3 justify-between">
+        <p className="text-xs md:text-sm">Explore Category</p>
+        <button onClick={() => navigator(`/category/${cat.id}`)} className="border-2 border-[#28cdba] rounded-full text-[#28cdba] p-1 hover:bg-[#28cdba] hover:text-white transition-colors">
           <MdChevronRight size={12} />
         </button>
       </div>
@@ -72,9 +72,9 @@ function CategoryPage() {
   );
 
   return (
-    <div className="px-96 py-10 min-h-screen bg-[#f5f5f5]">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-[#28cdba] mb-2">All Categories</h1>
+    <div className="px-4 sm:px-8 md:px-16 lg:px-32 xl:px-96 py-6 md:py-10 min-h-screen bg-[#f5f5f5]">
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-[#28cdba] mb-2">All Categories</h1>
         <p className="text-sm text-gray-600">Discover all our categories and find your perfect adventure</p>
       </div>
 
@@ -88,12 +88,12 @@ function CategoryPage() {
       ) : (
         <>
           {/* Items per page selector */}
-          <div className="flex justify-end mb-6">
+          <div className="flex justify-center md:justify-end mb-4 md:mb-6">
             <div className="flex items-center gap-2">
-              <label htmlFor="itemsPerPage" className="text-sm">
+              <label htmlFor="itemsPerPage" className="text-xs md:text-sm">
                 Items per page:
               </label>
-              <select id="itemsPerPage" value={itemsPerPage} onChange={handleItemsPerPageChange} className="border border-gray-300 rounded-md px-2 py-1 text-sm">
+              <select id="itemsPerPage" value={itemsPerPage} onChange={handleItemsPerPageChange} className="border border-gray-300 rounded-md px-2 py-1 text-xs md:text-sm">
                 <option value={4}>4</option>
                 <option value={8}>8</option>
                 <option value={12}>12</option>
@@ -103,29 +103,29 @@ function CategoryPage() {
           </div>
 
           {/* Categories grid */}
-          <div className="flex flex-wrap gap-4">{currentItems.map((category, index) => renderCategoryCard(category, index))}</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">{currentItems.map((category, index) => renderCategoryCard(category, index))}</div>
 
           {/* Pagination */}
-          <div className="flex justify-between items-center mt-8">
-            <div className="text-sm text-gray-600">
+          <div className="flex flex-col sm:flex-row sm:justify-between items-center mt-6 md:mt-8 gap-3 sm:gap-0">
+            <div className="hidden sm:block text-xs md:text-sm text-gray-600">
               Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, categories.length)} of {categories.length} categories
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-1 sm:gap-2 items-center">
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className={`px-3 py-0.5 rounded-lg flex items-center ${currentPage === 1 ? "bg-gray-200 text-gray-500 cursor-not-allowed" : "bg-[#28cdba] text-white hover:bg-[#20a89a]"}`}
+                className={`px-2 sm:px-3 py-0.5 rounded-lg flex items-center text-xs sm:text-sm ${currentPage === 1 ? "bg-gray-200 text-gray-500 cursor-not-allowed" : "bg-[#28cdba] text-white hover:bg-[#20a89a]"}`}
               >
-                <MdChevronLeft size={18} />
-                <span className="text-[10px]">Prev</span>
+                <MdChevronLeft size={16} className="sm:w-[18px] sm:h-[18px]" />
+                <span className="text-[9px] sm:text-[10px] ml-1">Prev</span>
               </button>
 
-              <div className="flex gap-1">
+              <div className="flex gap-0.5 sm:gap-1">
                 {[...Array(totalPages).keys()].map((number) => (
                   <button
                     key={number + 1}
                     onClick={() => paginate(number + 1)}
-                    className={`w-6 h-6 rounded-full text-[10px] ${currentPage === number + 1 ? "bg-[#28cdba] text-white" : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"}`}
+                    className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[9px] sm:text-[10px] ${currentPage === number + 1 ? "bg-[#28cdba] text-white" : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"}`}
                   >
                     {number + 1}
                   </button>
@@ -135,10 +135,10 @@ function CategoryPage() {
               <button
                 onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                 disabled={currentPage === totalPages}
-                className={`px-3 py-0.5 rounded-lg flex items-center ${currentPage === totalPages ? "bg-gray-200 text-gray-500 cursor-not-allowed" : "bg-[#28cdba] text-white hover:bg-[#20a89a]"}`}
+                className={`px-2 sm:px-3 py-0.5 rounded-lg flex items-center text-xs sm:text-sm ${currentPage === totalPages ? "bg-gray-200 text-gray-500 cursor-not-allowed" : "bg-[#28cdba] text-white hover:bg-[#20a89a]"}`}
               >
-                <span className="text-[10px]">Next</span>
-                <MdChevronRight size={18} />
+                <span className="text-[9px] sm:text-[10px] mr-1">Next</span>
+                <MdChevronRight size={16} className="sm:w-[18px] sm:h-[18px]" />
               </button>
             </div>
           </div>

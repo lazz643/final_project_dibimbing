@@ -53,34 +53,34 @@ function Banner({ banner }) {
   };
 
   return (
-    <div className="mt-5 w-full h-[calc(100vh-52px)] relative">
-      <div ref={scrollRef} className="w-full h-full flex rounded-3xl overflow-x-auto snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+    <div className="mt-5 w-full h-[calc(100vh-52px)] min-h-[400px] md:min-h-[500px] relative">
+      <div ref={scrollRef} className="w-full h-full flex rounded-2xl md:rounded-3xl overflow-x-auto snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
         {banner.map((bann, index) => (
           <div key={index} className="relative overflow-hidden min-w-full w-full flex-shrink-0 snap-center">
             <img src={bann.imageUrl} alt="banner" className="w-full h-full object-cover" />
-            <div className="absolute w-full h-full top-0 left-0 bg-gradient-to-r from-black/80 to-black/20">
-              <div className="w-[35%] h-full flex flex-col justify-center px-20 gap-2">
-                <p className="font-bold text-3xl text-white">{bann.name}</p>
-                <div className="flex gap-3.5 text-sm">
+            <div className="absolute w-full h-full top-0 left-0 bg-gradient-to-r from-black/80 via-black/40 to-black/20">
+              <div className="w-full md:w-[35%] h-full flex flex-col justify-center px-4 md:px-20 gap-2 md:gap-2">
+                <p className="font-bold text-xl md:text-3xl text-white leading-tight">{bann.name}</p>
+                <div className="flex flex-wrap gap-2 md:gap-3.5 text-xs md:text-sm">
                   <div className="flex gap-1 items-center">
-                    <IoLocationOutline className="text-[#28cdba] " />
-                    <p className="text-white">indonesia</p>
+                    <IoLocationOutline className="text-[#28cdba]" size={16} />
+                    <p className="text-white">Indonesia</p>
                   </div>
                   <div className="flex gap-1 items-center">
-                    <AiOutlineClockCircle className="text-[#28cdba]" />
+                    <AiOutlineClockCircle className="text-[#28cdba]" size={16} />
                     <p className="text-white">3 days</p>
                   </div>
                   <div className="flex gap-1 items-center">
-                    <AiFillStar className="text-[#28cdba]" />
+                    <AiFillStar className="text-[#28cdba]" size={16} />
                     <p className="text-white">4.8 (200)</p>
                   </div>
                 </div>
-                <p className="text-white text-sm">Great for families, solo travelers, and friends looking to explore and enjoy.</p>
+                <p className="text-white text-xs md:text-sm leading-relaxed max-w-md">Great for families, solo travelers, and friends looking to explore and enjoy.</p>
                 <div className="flex flex-col">
-                  <p className="text-2xl font-bold text-white">Rp 999.000</p>
-                  <p className="text-white text-[10px]">* Price per Person</p>
+                  <p className="text-xl md:text-2xl font-bold text-white">Rp 999.000</p>
+                  <p className="text-white text-xs md:text-[10px]">* Price per Person</p>
                 </div>
-                <button className="mt-2 rounded-md max-w-max py-1 px-3 bg-[#28cdba] text-white text-[12px]">Explore Now</button>
+                <button className="mt-2 rounded-md max-w-max py-2 md:py-1 px-4 md:px-3 bg-[#28cdba] text-white text-sm md:text-xs hover:bg-[#20a89a] transition-colors">Explore Now</button>
               </div>
             </div>
           </div>
@@ -88,18 +88,18 @@ function Banner({ banner }) {
       </div>
 
       {/* Tombol navigasi kiri */}
-      <button onClick={scrollLeft} className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full z-10">
-        <IoIosArrowBack size={24} />
+      <button onClick={scrollLeft} className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 md:p-2 rounded-full z-10 transition-all">
+        <IoIosArrowBack size={20} className="md:w-6 md:h-6" />
       </button>
 
       {/* Tombol navigasi kanan */}
-      <button onClick={scrollRight} className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full z-10">
-        <IoIosArrowForward size={24} />
+      <button onClick={scrollRight} className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white p-2 md:p-2 rounded-full z-10 transition-all">
+        <IoIosArrowForward size={20} className="md:w-6 md:h-6" />
       </button>
 
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
+      <div className="absolute bottom-4 md:bottom-2 left-1/2 -translate-x-1/2 flex gap-2">
         {banner.map((_, index) => (
-          <div key={index} className={`w-2 h-2 rounded-full cursor-pointer transition-colors duration-300 ${index === activeIndex ? "bg-[#28cdba]" : "bg-white opacity-70"}`} onClick={() => scrollToIndex(index)}></div>
+          <div key={index} className={`w-3 h-3 md:w-2 md:h-2 rounded-full cursor-pointer transition-colors duration-300 ${index === activeIndex ? "bg-[#28cdba]" : "bg-white opacity-70"}`} onClick={() => scrollToIndex(index)}></div>
         ))}
       </div>
     </div>

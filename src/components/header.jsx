@@ -103,16 +103,38 @@ function Headers() {
     };
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userData");
-    setIsLoggedIn(false);
-    setUserData({
-      name: "",
-      profilePictureUrl: "",
-      role: "",
-    });
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      // Call logout API
+      if (token) {
+        await axios.post(
+          "https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/logout",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      }
+    } catch (error) {
+      console.error("Logout API error:", error);
+      // Continue with logout even if API call fails
+    } finally {
+      // Always clear local storage and redirect
+      localStorage.removeItem("token");
+      localStorage.removeItem("userData");
+      setIsLoggedIn(false);
+      setUserData({
+        name: "",
+        profilePictureUrl: "",
+        role: "",
+      });
+      navigate("/");
+    }
   };
 
   const toggleMobileMenu = () => {
@@ -125,7 +147,7 @@ function Headers() {
 
   return (
     <>
-      <div className="w-full h-[60px] bg-white flex justify-between items-center px-4 md:px-8 lg:px-16 xl:px-24 sticky top-0 z-10 shadow-sm">
+      <div className="w-full h-[60px] bg-white flex justify-between items-center px-4 md:px-8 lg:px-16 xl:px-24 sticky top-0 z-60 shadow-sm">
         {/* Logo */}
         <div className="text-xl font-bold text-[#28cdba] cursor-pointer" onClick={() => navigate("/")}>
           TravelJoy
@@ -191,6 +213,17 @@ function Headers() {
               {/* Account Dropdown Menu */}
               {accountMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
+                  {userData.role === "admin" && (
+                    <button
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => {
+                        setAccountMenuOpen(false);
+                        navigate("/dashboard");
+                      }}
+                    >
+                      Dashboard
+                    </button>
+                  )}
                   <button
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     onClick={() => {
@@ -331,6 +364,19 @@ function Headers() {
                     </div>
                   </div>
                 </li>
+                {userData.role === "admin" && (
+                  <li>
+                    <button
+                      onClick={() => {
+                        navigate("/dashboard");
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-3 hover:bg-gray-100 transition-colors duration-300 font-medium"
+                    >
+                      Dashboard
+                    </button>
+                  </li>
+                )}
                 <li>
                   <button
                     onClick={() => {
