@@ -314,7 +314,7 @@ function Cart() {
                           onClick={() => setSelectedPaymentMethod(method.id)}
                           className={`flex items-center gap-3 p-3 border rounded-lg cursor-pointer transition-colors ${selectedPaymentMethod === method.id ? "border-[#28cdba] bg-[#28cdba]/5" : "border-gray-200 hover:border-gray-300"}`}
                         >
-                          <div className="w-12 h-12 flex items-center justify-center bg-white rounded-lg border overflow-hidden">
+                          <div className="w-12 h-12 flex items-center justify-center bg-white rounded-lg border-gray-300 border-2 overflow-hidden">
                             <img
                               src={method.imageUrl}
                               alt={method.name}

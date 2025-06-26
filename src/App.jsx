@@ -11,6 +11,7 @@ import ActivityDetail from "./page/activityPage/[id]";
 import PromoDetail from "./page/promoPage/[id]";
 import CategoryDetail from "./page/categoryPage/[id]";
 import PromoPage from "./page/promoPage/promoPage";
+import BannerPage from "./page/bannerPage/bannerPage";
 import Cart from "./page/cart/cart";
 import Transaction from "./page/transaction/transaction";
 import TransactionDetail from "./page/transaction/detail";
@@ -39,6 +40,7 @@ function App() {
             <Route path="/category/:id" element={<CategoryDetail />} />
             <Route path="/promo" element={<PromoPage />} />
             <Route path="/promo/:id" element={<PromoDetail />} />
+            <Route path="/banner/:id" element={<BannerPage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/transaction" element={<Transaction />} />
             <Route path="/transaction/:id" element={<TransactionDetail />} />

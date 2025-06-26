@@ -149,8 +149,8 @@ function Headers() {
     <>
       <div className="w-full h-[60px] bg-white flex justify-between items-center px-4 md:px-8 lg:px-16 xl:px-24 sticky top-0 z-60 shadow-sm">
         {/* Logo */}
-        <div className="text-xl font-bold text-[#28cdba] cursor-pointer" onClick={() => navigate("/")}>
-          TravelJoy
+        <div className="cursor-pointer" onClick={() => navigate("/")}>
+          <img src="/logoH.png" alt="TravelJoy" className="h-10 w-auto object-contain hover:opacity-80 transition-opacity duration-300" />
         </div>
 
         {/* Desktop Menu */}

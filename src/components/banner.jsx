@@ -1,9 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { IoLocationOutline } from "react-icons/io5";
 import { AiOutlineClockCircle, AiFillStar } from "react-icons/ai";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 function Banner({ banner }) {
+  const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -80,7 +82,9 @@ function Banner({ banner }) {
                   <p className="text-xl md:text-2xl font-bold text-white">Rp 999.000</p>
                   <p className="text-white text-xs md:text-[10px]">* Price per Person</p>
                 </div>
-                <button className="mt-2 rounded-md max-w-max py-2 md:py-1 px-4 md:px-3 bg-[#28cdba] text-white text-sm md:text-xs hover:bg-[#20a89a] transition-colors">Explore Now</button>
+                <button onClick={() => navigate(`/banner/${bann.id}`)} className="mt-2 rounded-md max-w-max py-2 md:py-1 px-4 md:px-3 bg-[#28cdba] text-white text-sm md:text-xs hover:bg-[#20a89a] transition-colors">
+                  Explore Now
+                </button>
               </div>
             </div>
           </div>

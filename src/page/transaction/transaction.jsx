@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaReceipt, FaClock, FaCheckCircle, FaTimesCircle, FaEye } from "react-icons/fa";
+import { FaReceipt, FaClock, FaCheckCircle, FaTimesCircle, FaEye, FaTimes } from "react-icons/fa";
 import { IoArrowBack } from "react-icons/io5";
 
 function Transaction() {
   const navigate = useNavigate();
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cancellingId, setCancellingId] = useState(null);
 
   useEffect(() => {
     fetchTransactions();
@@ -103,6 +104,37 @@ function Transaction() {
     }
   };
 
+  const cancelTransaction = async (transactionId) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/front");
+      return;
+    }
+
+    try {
+      setCancellingId(transactionId);
+      await axios.put(
+        `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/cancel-transaction/${transactionId}`,
+        {},
+        {
+          headers: {
+            apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Refresh transactions after successful cancellation
+      await fetchTransactions();
+      alert("Transaksi berhasil dibatalkan");
+    } catch (error) {
+      console.error("Error cancelling transaction:", error);
+      alert("Gagal membatalkan transaksi. Silakan coba lagi.");
+    } finally {
+      setCancellingId(null);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -179,7 +211,7 @@ function Transaction() {
                 {/* Transaction Items */}
                 <div className="space-y-3 mb-4">
                   {transaction.transaction_items?.map((item, index) => (
-                    <div key={index} className="flex gap-4 p-3 border rounded-lg">
+                    <div key={index} className="flex gap-4 p-3 border border-gray-300 rounded-lg">
                       <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
                         <img src={item.imageUrls?.[0] || "/placeholder-image.jpg"} alt={item.title} className="w-full h-full object-cover" />
                       </div>
@@ -217,9 +249,30 @@ function Transaction() {
                         <p className="text-sm font-medium text-red-600">{formatDate(transaction.expiredDate)}</p>
                       </div>
                     )}
-                    <button onClick={() => navigate(`/transaction/${transaction.id}`)} className="bg-[#28cdba] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#20a89a] transition-colors text-sm">
-                      View Details
-                    </button>
+                    <div className="flex gap-2">
+                      {transaction.status === "pending" && (
+                        <button
+                          onClick={() => cancelTransaction(transaction.id)}
+                          disabled={cancellingId === transaction.id}
+                          className="bg-red-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-600 transition-colors text-sm flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {cancellingId === transaction.id ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                              Cancelling...
+                            </>
+                          ) : (
+                            <>
+                              <FaTimes size={14} />
+                              Cancel
+                            </>
+                          )}
+                        </button>
+                      )}
+                      <button onClick={() => navigate(`/transaction/${transaction.id}`)} className="bg-[#28cdba] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#20a89a] transition-colors text-sm">
+                        View Details
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
