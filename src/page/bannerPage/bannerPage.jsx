@@ -4,7 +4,7 @@ import axios from "axios";
 import { IoArrowBack } from "react-icons/io5";
 import { IoLocationOutline } from "react-icons/io5";
 import { AiOutlineClockCircle, AiFillStar } from "react-icons/ai";
-import { FaCalendarAlt, FaUsers, FaMapMarkerAlt, FaTimes } from "react-icons/fa";
+import { FaCalendarAlt, FaUsers, FaMapMarkerAlt } from "react-icons/fa";
 
 function BannerPage() {
   const { id } = useParams();
@@ -12,7 +12,6 @@ function BannerPage() {
   const [banner, setBanner] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [cancellingId, setCancellingId] = useState(null);
 
   useEffect(() => {
     fetchBannerDetail();
@@ -41,37 +40,6 @@ function BannerPage() {
       month: "long",
       day: "numeric",
     });
-  };
-
-  const cancelTransaction = async (transactionId) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/front");
-      return;
-    }
-
-    try {
-      setCancellingId(transactionId);
-      await axios.put(
-        `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/cancel-transaction/${transactionId}`,
-        {},
-        {
-          headers: {
-            apiKey: "24405e01-fbc1-45a5-9f5a-be13afcd757c",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // Refresh transactions after successful cancellation
-      await fetchBannerDetail();
-      alert("Transaksi berhasil dibatalkan");
-    } catch (error) {
-      console.error("Error cancelling transaction:", error);
-      alert("Gagal membatalkan transaksi. Silakan coba lagi.");
-    } finally {
-      setCancellingId(null);
-    }
   };
 
   if (loading) {
@@ -137,13 +105,7 @@ function BannerPage() {
                   <p className="text-3xl md:text-3xl font-bold text-white">Rp 999.000</p>
                   <p className="text-white/80">* Price per Person</p>
                 </div>
-                <div className="flex gap-2">
-                  <button className="bg-red-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-600 transition-colors text-md flex items-center gap-2">
-                    <FaTimes size={14} />
-                    Cancel
-                  </button>
-                  <button className="bg-[#28cdba] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#20a89a] transition-colors text-md">Book Now</button>
-                </div>
+                <button className="bg-[#28cdba] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#20a89a] transition-colors text-md">Book Now</button>
               </div>
             </div>
           </div>

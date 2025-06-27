@@ -524,23 +524,6 @@ function AdminBanner() {
                   />
                 </div>
 
-                {/* Image Preview */}
-                {formData.imageUrl && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Preview</label>
-                    <div className="border border-gray-300 rounded-lg p-2">
-                      <img
-                        src={formData.imageUrl}
-                        alt="Banner preview"
-                        className="w-full h-32 object-cover rounded"
-                        onError={(e) => {
-                          e.target.src = "https://via.placeholder.com/400x128?text=Invalid+Image+URL";
-                        }}
-                      />
-                    </div>
-                  </div>
-                )}
-
                 <div className="flex items-center justify-end space-x-3 pt-4">
                   <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
                     Cancel

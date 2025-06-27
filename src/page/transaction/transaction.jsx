@@ -113,7 +113,7 @@ function Transaction() {
 
     try {
       setCancellingId(transactionId);
-      await axios.put(
+      await axios.post(
         `https://travel-journal-api-bootcamp.do.dibimbing.id/api/v1/cancel-transaction/${transactionId}`,
         {},
         {

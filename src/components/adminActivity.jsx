@@ -689,10 +689,6 @@ function AdminActivity() {
                       )}
                     </div>
                   ))}
-                  <button type="button" onClick={addImageUrl} className="text-[#28cdba] hover:text-[#20b5a5] text-sm flex items-center gap-1">
-                    <FaPlus size={12} />
-                    Add Image URL
-                  </button>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

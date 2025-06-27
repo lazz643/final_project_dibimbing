@@ -541,19 +541,6 @@ function AdminCategories() {
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#28cdba] focus:border-transparent"
                     placeholder="https://example.com/image.jpg"
                   />
-                  {formData.imageUrl && (
-                    <div className="mt-2">
-                      <p className="text-sm text-gray-600 mb-2">Image Preview:</p>
-                      <img
-                        src={formData.imageUrl}
-                        alt="Preview"
-                        className="h-32 w-32 object-cover rounded-lg border border-gray-300"
-                        onError={(e) => {
-                          e.target.style.display = "none";
-                        }}
-                      />
-                    </div>
-                  )}
                 </div>
 
                 <div className="flex items-center justify-end space-x-3 pt-4">
